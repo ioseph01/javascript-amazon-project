@@ -2,6 +2,7 @@ import {cart, addToCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 
 let productsHTML = '';
+updateCartQuantity();
 
 products.forEach(
   product => {
@@ -58,7 +59,7 @@ products.forEach(
   }
 );
 
-function updateCartQuantity() {
+export function updateCartQuantity() {
   let cartQuantity = 0;
   cart.forEach(
     cartItem => {
@@ -76,6 +77,8 @@ document.querySelectorAll('.js-add-to-cart').forEach(
     buttonElement.addEventListener('click', () => {
       const productId = buttonElement.dataset.productId;
       addToCart(productId);
+      updateCartQuantity();
+
     })
   }
 );

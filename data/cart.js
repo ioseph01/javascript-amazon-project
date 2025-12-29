@@ -1,6 +1,7 @@
 export const cart = [];
 
-function addToCart(productId) {
+export function addToCart(productId) {
+  console.log('Called');
   let matchingItem;
 
   cart.forEach(
@@ -25,6 +26,5 @@ function addToCart(productId) {
       }
     );
   }
-  updateCartQuantity();
 
 }
