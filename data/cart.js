@@ -53,7 +53,6 @@ export function removeFromCart(productId) {
       cart.splice(i,1);
     }
   });
-  console.log(cart);
   saveToStorage();
 }
 
