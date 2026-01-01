@@ -114,8 +114,6 @@ export function renderOrderSummary() {
       document.querySelector('.js-cart-quantity').innerText = `${cart.getCartQuantity()} items`;
       document.querySelector('.js-summary-cart-quantity').innerText = `Items (${cart.getCartQuantity()}):`;
       renderPaymentSummary();
-
-      
   }
 
 
