@@ -1,4 +1,4 @@
-import {cart, getCartQuantity, removeFromCart, updateDeliveryOption} from '../../data/cart.js';
+import {cart} from '../../data/cart.js';
 import {products, getProduct} from '../../data/products.js';
 import { formatCurrency } from '../utils/money.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
@@ -12,7 +12,7 @@ export function renderOrderSummary() {
   let cartSummaryHTML = '';
   updateDisplays();
 
-  cart.forEach(
+  cart.cartItems.forEach(
     cartItem => {
       const productId = cartItem.productId;
       const matchingProduct = getProduct(productId);
@@ -39,7 +39,7 @@ export function renderOrderSummary() {
                     ${matchingProduct.name}
                   </div>
                   <div class="product-price">
-                    $${formatCurrency(matchingProduct.priceCents)}
+                    $${matchingProduct.getPrice()}
                   </div>
                   <div class="product-quantity">
                     <span>
@@ -102,7 +102,7 @@ export function renderOrderSummary() {
     link => {
       link.addEventListener('click', () => {
         const productId = link.dataset.productId;
-        removeFromCart(productId);
+        cart.removeFromCart(productId);
         const container = document.querySelector(`.js-cart-item-container-${productId}`);
         container.remove();
         updateDisplays();
@@ -111,8 +111,8 @@ export function renderOrderSummary() {
   );
 
   function updateDisplays() {
-      document.querySelector('.js-cart-quantity').innerText = `${getCartQuantity()} items`;
-      document.querySelector('.js-summary-cart-quantity').innerText = `Items (${getCartQuantity()}):`;
+      document.querySelector('.js-cart-quantity').innerText = `${cart.getCartQuantity()} items`;
+      document.querySelector('.js-summary-cart-quantity').innerText = `Items (${cart.getCartQuantity()}):`;
       renderPaymentSummary();
 
       
@@ -122,7 +122,7 @@ export function renderOrderSummary() {
   document.querySelectorAll('.js-delivery-option').forEach( element => {
     element.addEventListener('click', () => {
       const {productId, deliveryOptionId} = element.dataset;
-      updateDeliveryOption(productId, deliveryOptionId);
+      cart.updateDeliveryOption(productId, deliveryOptionId);
       renderOrderSummary();
 
     });
