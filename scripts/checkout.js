@@ -13,15 +13,21 @@ async function loadPage() {
   //     resolve();
   //   })
   // });
-  await Promise.all([
-    loadProductsFetch(),
+  try {
+    await Promise.all([
+      loadProductsFetch(),
 
-    new Promise(resolve => {
-      loadCart(() => {
-        resolve();
+      new Promise(resolve => {
+        loadCart(() => {
+          resolve();
+        })
       })
-    })
-  ]);
+    ]);
+  }
+  
+  catch (error) {
+   console.log("Unexpected error. Please try again later."); 
+  }
   renderOrderSummary();
   renderPaymentSummary();
 }
